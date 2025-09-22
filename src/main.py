@@ -1,6 +1,16 @@
 from fastapi import FastAPI
-from .database.core import engine, Base
+from sqlalchemy import Engine
 
-app = FastAPI(title="Adamant Challenge Backend Application", version="1.0.0")
+from .database.core import Base, engine
 
-Base.metadata.create_all(bind=engine)
+from .api import register_routes
+
+app = FastAPI(
+    title="Adamant Challenge Backend Application",
+    description="This is created as part of the process for a backend API take-home assignment.",
+    version="1.0.0",
+)
+
+#Base.metadata.create_all(bind=engine)
+
+register_routes(app)

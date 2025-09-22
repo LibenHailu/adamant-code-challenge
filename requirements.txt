@@ -3,3 +3,9 @@ uvicorn==0.36.0
 sqlalchemy==2.0.36
 python-dotenv==1.1.1
 psycopg2-binary==2.9.10
+chromadb==1.1.0
+langchain==0.3.27
+langchain-community==0.3.29
+pypdf==6.1.0
+langchain-openai==0.3.33
+langchain-chroma==0.2.6
