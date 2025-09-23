@@ -1,16 +1,52 @@
+from datetime import datetime
 from fastapi import FastAPI
-from sqlalchemy import Engine
+from starlette.middleware.cors import CORSMiddleware
 
-from .database.core import Base, engine
+from src.api.v1.routes import routers as v1_routers
+from src.core.config import configs
+from src.core.container import Container
+from src.utils.singleton import singleton
 
-from .api import register_routes
 
-app = FastAPI(
-    title="Adamant Challenge Backend Application",
-    description="This is created as part of the process for a backend API take-home assignment.",
-    version="1.0.0",
-)
+@singleton
+class AppCreator:
+    def __init__(self):
+        self.app = FastAPI(
+            title=configs.PROJECT_TITLE,
+            openapi_url=f"{configs.API}/openapi.json",
+            version=configs.APP_VERSION,
+        )
 
-#Base.metadata.create_all(bind=engine)
+        self.container = Container()
+        self.db = self.container.db()
+        # self.db.create_database()
 
-register_routes(app)
+        # set cors
+        if configs.BACKEND_CORS_ORIGINS:
+            self.app.add_middleware(
+                CORSMiddleware,
+                allow_origins=[str(origin) for origin in configs.BACKEND_CORS_ORIGINS],
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
+
+        @self.app.get("/")
+        def root():
+            return {
+                "message": "Welcome to Adamant Challenge API!",
+                "version": configs.APP_VERSION,
+                "documentation": "/docs",
+            }
+
+        @self.app.get("/health", tags=["Health"])
+        async def health_check():
+            return {"status": "ok", "timestamp": datetime.utcnow().isoformat() + "Z"}
+
+        self.app.include_router(v1_routers, prefix=configs.API_V1_STR)
+
+
+app_creator = AppCreator()
+app = app_creator.app
+db = app_creator.db
+container = app_creator.container
