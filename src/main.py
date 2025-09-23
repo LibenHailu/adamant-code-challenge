@@ -39,10 +39,6 @@ class AppCreator:
                 "documentation": "/docs",
             }
 
-        @self.app.get("/health", tags=["Health"])
-        async def health_check():
-            return {"status": "ok", "timestamp": datetime.utcnow().isoformat() + "Z"}
-
         self.app.include_router(v1_routers, prefix=configs.API_V1_STR)
 
 

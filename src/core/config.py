@@ -47,6 +47,7 @@ class Configs(BaseSettings):
     #     )
     # )
     DATABASE_URI: str = os.getenv("DATABASE_URL", "")
+    WEATHER_API_KEY: str = os.getenv("WEATHER_API_KEY", "")
 
 
 configs = Configs()
