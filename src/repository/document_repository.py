@@ -22,6 +22,7 @@ class DocumentRepository(BaseRepository):
 
     def create_with_pages(self, schema: DocumentCreate, pages: List[any]):
         with self.session_factory() as session:
+            schema.is_processed = True
             document = self.model(**schema.model_dump())
             session.add(document)
             session.flush()
@@ -31,6 +32,7 @@ class DocumentRepository(BaseRepository):
                     document_id=document.id,
                     page_number=index + 1,
                     content=page.page_content,
+                    is_processed=True,
                 )
                 session.add(page_data)
 
