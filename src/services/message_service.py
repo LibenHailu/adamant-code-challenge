@@ -17,8 +17,8 @@ class MessageService(BaseService):
         super().__init__(message_repository)
 
     async def create(self, schema: MessageCreate):
-        # user_message = MessageCreate(content=schema.content, is_ai=False)
-        # self.message_repository.create(user_message)
+        user_message = MessageCreate(content=schema.content, is_ai=False)
+        self.message_repository.create(user_message)
         template = ChatPromptTemplate.from_messages(
             [
                 (
