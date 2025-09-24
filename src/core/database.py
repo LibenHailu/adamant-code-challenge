@@ -31,7 +31,7 @@ class Database:
     def create_database(self) -> None:
         # Base = declarative_base()
         BaseModel.metadata.create_all(bind=self._engine)
-    
+
     def get_base(self):
         Base = declarative_base()
         return Base
