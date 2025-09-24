@@ -11,3 +11,4 @@ langchain-openai==0.3.33
 langchain-chroma==0.2.6
 dependency-injector==4.48.2
 loguru==0.7.3
+sqlmodel
