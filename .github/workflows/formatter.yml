@@ -25,7 +25,7 @@ jobs:
       - name: Push changes
         if: env.modified == 'true'
         run: |
-          git config --global user.name 'LibenHailu'
+          git config --global user.name 'Liben Hailu'
           git config --global user.email 'libenhailu04@gmail.com'
           git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git commit -am "Automated fixes"
