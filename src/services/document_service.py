@@ -1,5 +1,6 @@
 import os
 from fastapi import UploadFile
+from loguru import logger
 from src.repository.document_page_repository import DocumentPageRepository
 from src.repository.document_repository import DocumentRepository
 from src.schema.document_schema import DocumentCreate
@@ -36,5 +37,5 @@ class DocumentService(BaseService):
             return response
 
         except Exception as e:
-            # TODO: log the error
+            logger.error(f"Error uploading file: {e}")  
             raise InternalServerError("Failed to process the file")

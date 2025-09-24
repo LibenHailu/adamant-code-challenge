@@ -29,8 +29,8 @@ class Database:
         )
 
     def create_database(self) -> None:
-        Base = declarative_base()
-        Base.metadata.create_all(bind=self._engine)
+        # Base = declarative_base()
+        BaseModel.metadata.create_all(bind=self._engine)
 
     @contextmanager
     def session(self) -> Generator[Any, Any, AbstractContextManager[Session]]:
