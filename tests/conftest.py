@@ -1,4 +1,5 @@
 import pytest
+
 from src.core.config import configs
 
 if configs.ENV not in ["test"]:

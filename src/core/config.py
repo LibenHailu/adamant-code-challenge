@@ -32,9 +32,7 @@ class Configs(BaseSettings):
     DB_PORT: str = os.getenv("DB_PORT", "5432")
     DB_ENGINE: str = "postgresql"
 
-    DATABASE_URI_FORMAT: str = (
-        "{db_engine}://{user}:{password}@{host}:{port}/{database}"
-    )
+    DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
     # DATABASE_URI: ClassVar[str] = (
     #     "{db_engine}://{user}:{password}@{host}:{port}/{database}".format(

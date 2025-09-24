@@ -43,9 +43,7 @@ class DocumentRepository(BaseRepository):
             ids = []
 
             for page_num, page in enumerate(pages):
-                page_chunks = self.chroma_client.text_splitter.split_text(
-                    page.page_content
-                )
+                page_chunks = self.chroma_client.text_splitter.split_text(page.page_content)
 
                 for chunk_num, chunk in enumerate(page_chunks):
                     documents_to_index.append(chunk)
@@ -57,9 +55,7 @@ class DocumentRepository(BaseRepository):
                             "document_title": document.title,
                         }
                     )
-                    ids.append(
-                        f"doc_{document.id}_page_{page_num+1}_chunk_{chunk_num+1}"
-                    )
+                    ids.append(f"doc_{document.id}_page_{page_num+1}_chunk_{chunk_num+1}")
 
             if documents_to_index:
                 self.chroma_client.vectorstore.add_texts(

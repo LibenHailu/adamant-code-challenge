@@ -1,5 +1,5 @@
-from functools import wraps
 import inspect
+from functools import wraps
 
 from dependency_injector.wiring import inject as di_inject
 from loguru import logger
@@ -10,6 +10,7 @@ from src.services.base_service import BaseService
 def inject(func):
     # Support both async and sync callables
     if inspect.iscoroutinefunction(func):
+
         @di_inject
         @wraps(func)
         async def async_wrapper(*args, **kwargs):

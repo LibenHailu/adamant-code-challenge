@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 
+
 def test_root_flow(client: TestClient):
 
     response = client.get("/")

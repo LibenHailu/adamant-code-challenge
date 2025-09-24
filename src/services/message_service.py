@@ -1,17 +1,16 @@
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
 from src.core.exceptions import ClientError
 from src.core.weather_client import WeatherApiClient
 from src.repository.message_repository import MessageRepository
 from src.schema.message_schema import MessageCategory, MessageCreate
 from src.services.base_service import BaseService
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 
 
 class MessageService(BaseService):
-    def __init__(
-        self, message_repository: MessageRepository, weather_client: WeatherApiClient
-    ):
+    def __init__(self, message_repository: MessageRepository, weather_client: WeatherApiClient):
         self.message_repository = message_repository
         self.weather_client = weather_client
         super().__init__(message_repository)
@@ -69,9 +68,7 @@ class MessageService(BaseService):
             food_chain = prompt | llm | StrOutputParser()
             result = food_chain.invoke({"context": context, "question": schema.content})
 
-            return self.message_repository.create(
-                MessageCreate(content=result, is_ai=True)
-            )
+            return self.message_repository.create(MessageCreate(content=result, is_ai=True))
 
         if result.category == "Weather":
             response = await self.weather_client.get_weather(location="New York")

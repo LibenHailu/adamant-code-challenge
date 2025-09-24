@@ -1,5 +1,6 @@
-import uuid
 import os
+import uuid
+
 
 def get_random_file_location(original_filename: str, upload_dir: str = "uploads") -> str:
     # Extract extension from original filename

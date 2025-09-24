@@ -1,14 +1,14 @@
-from dependency_injector import containers, providers
 import httpx
+from dependency_injector import containers, providers
 
+from src.core.chroma_client import ChromaClient
 from src.core.config import configs
 from src.core.database import Database
 from src.core.weather_client import WeatherApiClient
-from src.repository.document_repository import DocumentRepository
 from src.repository.document_page_repository import DocumentPageRepository
+from src.repository.document_repository import DocumentRepository
 from src.repository.message_repository import MessageRepository
 from src.services.document_service import DocumentService
-from src.core.chroma_client import ChromaClient
 from src.services.message_service import MessageService
 
 
@@ -31,9 +31,7 @@ class Container(containers.DeclarativeContainer):
         session_factory=db.provided.session,
         chroma_client=chroma_client,
     )
-    document_page_repository = providers.Factory(
-        DocumentPageRepository, session_factory=db.provided.session
-    )
+    document_page_repository = providers.Factory(DocumentPageRepository, session_factory=db.provided.session)
     message_repository = providers.Factory(
         MessageRepository,
         session_factory=db.provided.session,
@@ -43,8 +41,7 @@ class Container(containers.DeclarativeContainer):
         WeatherApiClient,
         http_client=http_client,
     )
-    
-    
+
     document_service = providers.Factory(
         DocumentService,
         document_repository=document_repository,

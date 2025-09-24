@@ -1,5 +1,6 @@
 from typing import Optional
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -16,6 +17,7 @@ class MessageResponse(MessageBase):
     id: UUID
 
     model_config = ConfigDict(from_attributes=True)
+
 
 class MessageCategory(BaseModel):
     category: str = Field(description="Message category: 'Food', 'Weather', or 'NONE'")

@@ -10,6 +10,7 @@ from src.services.message_service import MessageService
 
 router = APIRouter()
 
+
 @router.post("/documents", response_model=DocumentResponse, status_code=status.HTTP_201_CREATED)
 @inject
 async def upload_document(
