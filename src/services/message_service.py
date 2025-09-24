@@ -32,26 +32,26 @@ class MessageService(BaseService):
             ]
         )
 
-        # TODO: manage models in config
-        llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0).with_structured_output(
-            MessageCategory, method="json_schema"
-        )
+        llm = ChatOpenAI(model="gpt-4o", temperature=0).with_structured_output(MessageCategory, method="json_schema")
 
         chain = template | llm
 
         result = chain.invoke({"message": schema.content})
-
-        if result.category == "None":
+        if result.category.lower() == "none":
             raise ClientError(detail="Invalid message category")
 
-        if result.category == "Food":
+        if result.category.lower() == "food":
             search_results = self.message_repository.get_by_query(schema.content, k=3)
             # for i, result in enumerate(search_results, 1):
             #     print(f"Result {i}:")
-            #     print(f"Source: {result.metadata.get('source', 'Unknown')}")
+            #     print(f"Source: {result.metadata.get('document_id', 'Unknown')}")
+            #     print(f"Page number: {result.metadata.get('document_title', 'Unknown')}")
+            #     print(f"Page number: {result.metadata.get('page_number', 'Unknown')}")
             #     print(f"Content: {result.page_content}")
             #     print()
+            #     print()
             context = " ".join([doc.page_content for doc in search_results])
+            # TODO: manage prompts in a constant file
             prompt = ChatPromptTemplate.from_template(
                 """You are a helpful assistant. 
                 Use the provided context to answer the question.
@@ -74,7 +74,7 @@ class MessageService(BaseService):
 
             return self.message_repository.create(MessageCreate(content=result, is_ai=True))
 
-        if result.category == "Weather":
+        if result.category.lower() == "weather":
             response = await self.weather_client.get_weather(location="New York")
             return self.message_repository.create(
                 MessageCreate(

@@ -2,6 +2,7 @@
 
 FastAPI backend for uploading PDFs, indexing their content in ChromaDB, and handling user messages via simple classification and RAG/Weather flows.
 
+[![Watch the demo](https://img.youtube.com/vi/-upnbiS0G_w/0.jpg)](https://youtu.be/-upnbiS0G_w?si=FpO1S6N96jrpmDEj)
 ## Tech Stack
 
 - FastAPI, Starlette (API)
@@ -69,6 +70,12 @@ uvicorn src.main:app --reload
 
 7. Open API docs: `http://localhost:8000/docs`
 
+8. Run tests:
+
+```bash
+pytest
+```
+
 ## Project Structure
 
 ```
@@ -101,3 +108,4 @@ migrations/               # Alembic migration scripts
     - Food: performs vector search over uploaded PDFs and answers with context (RAG).
     - Weather: fetches current weather via external API.
   - Response: `MessageResponse`
+
