@@ -1,5 +1,6 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
 from src.core.exceptions import ClientError
@@ -64,7 +65,10 @@ class MessageService(BaseService):
                 If the context does not contain the answer, say you don't know.
                 """
             )
-            llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+            llm = ChatGroq(
+                model="llama-3.3-70b-versatile",
+                temperature=0,
+            )
             food_chain = prompt | llm | StrOutputParser()
             result = food_chain.invoke({"context": context, "question": schema.content})
 

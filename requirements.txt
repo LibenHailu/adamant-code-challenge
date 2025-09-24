@@ -13,3 +13,4 @@ dependency-injector==4.48.2
 loguru==0.7.3
 sqlmodel
 python-multipart
+langchain_groq
